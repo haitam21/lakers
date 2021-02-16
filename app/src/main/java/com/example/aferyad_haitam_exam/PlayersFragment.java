@@ -3,10 +3,28 @@ package com.example.aferyad_haitam_exam;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import com.example.aferyad_haitam_exam.API.APILakers;
+import com.example.aferyad_haitam_exam.Model.Coach;
+import com.example.aferyad_haitam_exam.Model.Player;
+import com.example.aferyad_haitam_exam.Model.Result;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +32,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class PlayersFragment extends Fragment {
+    ArrayList<Player> players=new ArrayList<>();
+    RecyclerView recyclerView;
+    AdapterRVPlayer adapterRVPlayer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +80,46 @@ public class PlayersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_players, container, false);
+        final View view= inflater.inflate(R.layout.fragment_players, container, false);
+        recyclerView=view.findViewById(R.id.rvPlayers);
+        adapterRVPlayer=new AdapterRVPlayer(view.getContext(),players);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(adapterRVPlayer);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://android.busin.fr/api")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APILakers apiLakers=retrofit.create(APILakers.class);
+
+        Call<Result> call=apiLakers.getLakers();
+
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if(!response.isSuccessful()){
+
+                }else{
+                    Result result=response.body();
+                    preparView(result.getPlayers(), view);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+
+            }
+        });
+        return view;
+    }
+
+    private void preparView(List<Player> plays, View view) {
+        players.clear();
+        for(Player player:plays){
+            players.add(player);
+            adapterRVPlayer=new AdapterRVPlayer(view.getContext(),players);
+            recyclerView.setAdapter(adapterRVPlayer);
+        }
     }
 }
