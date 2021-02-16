@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "AFERYAD_Haitam_Exam"
