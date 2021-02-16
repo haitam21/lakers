@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class PlayersFragment extends Fragment {
         recyclerView.setAdapter(adapterRVPlayer);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://android.busin.fr/api")
+                .baseUrl("https://android.busin.fr/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -99,16 +100,17 @@ public class PlayersFragment extends Fragment {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if(!response.isSuccessful()){
-
+                    Log.e("erreur",response.message());
                 }else{
                     Result result=response.body();
+                    Log.e("erreur", String.valueOf(response.body()));
                     preparView(result.getPlayers(), view);
                 }
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-
+                Log.e("erreur",t.getMessage());
             }
         });
         return view;

@@ -33,10 +33,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
         Fragment fragment=null;
         switch(position){
-            case 1:
+            case 0:
                 fragment=new PlayersFragment();
                 break;
-            case 2:
+            case 1:
                 fragment=new CoachesFragment();
                 break;
         }

@@ -1,6 +1,7 @@
 package com.example.aferyad_haitam_exam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,8 @@ public class AdapterRVPlayer extends RecyclerView.Adapter<AdapterRVPlayer.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Player player=players.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        final Player player=players.get(position);
 
         ImageView imageView=holder.imageView;
         TextView name=holder.name;
@@ -47,8 +48,16 @@ public class AdapterRVPlayer extends RecyclerView.Adapter<AdapterRVPlayer.ViewHo
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
         name.setText(player.getName());
-        number.setText(player.getNumber());
+        number.setText(Integer.toString(player.getNumber()));
         post.setText(player.getPosition());
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,DetailsActivity.class);
+                intent.putExtra("photo",player.getPhoto());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

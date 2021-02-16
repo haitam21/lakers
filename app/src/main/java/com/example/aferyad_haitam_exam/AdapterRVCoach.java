@@ -1,6 +1,7 @@
 package com.example.aferyad_haitam_exam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class AdapterRVCoach extends RecyclerView.Adapter<AdapterRVCoach.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Coach coach=coaches.get(position);
+        final Coach coach=coaches.get(position);
 
         ImageView imageView=holder.imageView;
         TextView name=holder.name;
@@ -49,6 +50,15 @@ public class AdapterRVCoach extends RecyclerView.Adapter<AdapterRVCoach.ViewHold
         name.setText(coach.getName());
 
         post.setText(coach.getPosition());
+
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,DetailsActivity.class);
+                intent.putExtra("photo",coach.getPhoto());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

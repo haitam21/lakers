@@ -25,26 +25,30 @@
            <LinearLayout
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:orientation="vertical">
+               android:orientation="vertical"
+               android:layout_gravity="center"
+               android:gravity="center">
                <TextView
                    android:id="@+id/namepers"
-                   android:layout_width="match_parent"
+                   android:layout_width="wrap_content"
                    android:background="@android:color/transparent"
-                   android:layout_height="match_parent"
+                   android:layout_height="wrap_content"
                    android:textSize="20dp"
                    android:textColor="@color/yellow"
-                   android:textStyle="bold"
                    android:layout_gravity="center"
-                   android:gravity="center"/>
+                   android:gravity="center"
+                   android:textStyle="bold" />
                <TextView
                    android:id="@+id/postpers"
-                   android:layout_width="match_parent"
+                   android:layout_width="wrap_content"
                    android:background="@android:color/transparent"
-                   android:layout_height="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center"
+                   android:gravity="center"
                    android:textColor="@android:color/white"
                    android:textSize="20dp"
-                   android:layout_gravity="center"
-                   android:gravity="center"/>
+
+                   />
            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
